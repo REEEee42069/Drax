@@ -21,7 +21,7 @@ if (!SCALEDRONE_SECRET) {
 
 const app = express();
 //app.set("view engine", "ejs"); // EJS is used to add channelID to the html file
-app.use(express.static("public"));
+app.use(express.static("./public"));
 console.log(SCALEDRONE_CHANNEL);
 app.get("/", function (req, res) {
   res.sendFile("index.html", { title: 'chat' });
