@@ -5,7 +5,7 @@ const url = require("url");
 const hookcord = require('hookcord');
 const bodyParser = require('body-parser');
 //const {SCALEDRONE_CHANNEL, SCALEDRONE_SECRET, NODE_ENV} = process.env;
-const PORT = process.env.PORT || 1234;
+const PORT = process.env.PORT || 3000;
 const SCALEDRONE_CHANNEL = process.env.SCALEDRONE_CHANNEL;
 const SCALEDRONE_SECRET = process.env.SCALEDRONE_SECRET;
 const NODE_ENV = process.env.NODE_ENV;
@@ -20,14 +20,14 @@ if (!SCALEDRONE_SECRET) {
 }
 
 const app = express();
-app.set("view engine", "ejs"); // EJS is used to add channelID to the html file
+//app.set("view engine", "ejs"); // EJS is used to add channelID to the html file
 app.use(express.static("public"));
 console.log(SCALEDRONE_CHANNEL);
 app.get("/", function (req, res) {
-  res.render("index", { title: 'chat' });
+  res.render("index.html", { title: 'chat' });
 });
 app.get("/stone", function (req, res) {
-  res.render("stone", { title: 'chat' });
+  res.render("stone.html", { title: 'chat' });
 });
 app.get("/auth/:clientId", function (req, res) {
     const payload = {
