@@ -4,6 +4,7 @@ const log = require("tracer").colorConsole();
 const url = require("url");
 const hookcord = require('hookcord');
 const bodyParser = require('body-parser');
+const path = require('path');
 //const {SCALEDRONE_CHANNEL, SCALEDRONE_SECRET, NODE_ENV} = process.env;
 const PORT = process.env.PORT || 3000;
 const SCALEDRONE_CHANNEL = process.env.SCALEDRONE_CHANNEL;
@@ -25,6 +26,9 @@ app.use(express.static("./views"));
 console.log(SCALEDRONE_CHANNEL);
 app.get("/", function (req, res) {
   res.sendFile("index.html", { title: 'chat' });
+});
+app.use('/html',(req,res,next)=>{
+  res.sendFile(path.join(__dirname,'HTML','index.html'));
 });
 app.get("/stone", function (req, res) {
   res.sendFile("stone.html", { title: 'chat' });
