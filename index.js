@@ -24,10 +24,10 @@ const app = express();
 app.use(express.static("public"));
 console.log(SCALEDRONE_CHANNEL);
 app.get("/", function (req, res) {
-  res.render("index.html", { title: 'chat' });
+  res.sendFile("index.html", { title: 'chat' });
 });
 app.get("/stone", function (req, res) {
-  res.render("stone.html", { title: 'chat' });
+  res.sendFile("stone.html", { title: 'chat' });
 });
 app.get("/auth/:clientId", function (req, res) {
     const payload = {
