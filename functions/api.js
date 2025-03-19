@@ -1,35 +1,14 @@
-// packages
-import express from "express";
-import ServerlessHttp from "serverless-http";
+const express = require("express");
 const jwt = require("jsonwebtoken");
 const log = require("tracer").colorConsole();
 const url = require("url");
 const hookcord = require('hookcord');
 const bodyParser = require('body-parser');
-// Const pass
 //const {SCALEDRONE_CHANNEL, SCALEDRONE_SECRET, NODE_ENV} = process.env;
 const PORT = process.env.PORT || 1234;
 const SCALEDRONE_CHANNEL = process.env.SCALEDRONE_CHANNEL;
 const SCALEDRONE_SECRET = process.env.SCALEDRONE_SECRET;
 const NODE_ENV = process.env.NODE_ENV;
-
-//Netlify
-const app1 = express();
-const server = ServerlessHttp(app1);
-
-module.exports.handler = async(event, context) => {
-const result = await handler(event, context);
-  return result;
-  
-}
-
-app.get('/.netlify/functions/hi', (res, req) => {
-  return res.json({
-    messages: 'Hello from Netlify!'
-  });
-})
-
-// Production
 
 if (!SCALEDRONE_CHANNEL) {
   log.error("Please provide a SCALEDRONE_CHANNEL environmental variable");
@@ -44,13 +23,13 @@ const app = express();
 app.set("view engine", "ejs"); // EJS is used to add channelID to the html file
 app.use(express.static("public"));
 console.log(SCALEDRONE_CHANNEL);
-app.get("/.netlify/functions/", function (req, res) {
+app.get("/chat", function (req, res) {
   res.render("index", { title: 'chat' });
 });
-app.get("/.netlify/functions/stone", function (req, res) {
+app.get("/stone", function (req, res) {
   res.render("stone", { title: 'chat' });
 });
-app.get("/.netlify/functions/auth/:clientId", function (req, res) {
+app.get("/auth/:clientId", function (req, res) {
     const payload = {
       client: req.params.clientId,
       channel: SCALEDRONE_CHANNEL,
@@ -67,8 +46,28 @@ app.get("/.netlify/functions/auth/:clientId", function (req, res) {
     res.status(200).end(token);
 });
 
+
+
+/*app.use(bodyParser.urlencoded({ extended: true }));
+const Hook = new hookcord.Hook();
+Hook.login(
+"1350129665112674354","_TYTLHGvu9RyWTrXegBxAtxMc4YQEsa65INgPHHLIZzJXs306Q8xrUT1RK13baUU_-7V",
+);
+app.get('/submit', (req, res) => {
+    const userInput = req.body.userInput;
+    console.log(userInput);
+    Hook.setPayload({
+      content: userInput,
+    });
+    Hook.fire()
+    .then(response_object => {
+    })
+    .catch(error => {
+      throw error;
+    });
+});*/
 const bodparser = bodyParser.urlencoded({ extended: false })
-app.post('/.netlify/functions/submit', bodparser, function (req, res){
+app.post('/submit', bodparser, function (req, res){
   console.log("i got a request");
   console.log(req.body.message);
   const userInput = req.body.message;
@@ -87,7 +86,7 @@ app.post('/.netlify/functions/submit', bodparser, function (req, res){
     throw error;
   });
 });
-app.post('/.netlify/functions/stone', bodparser, function (req, res){
+app.post('/stone', bodparser, function (req, res){
   console.log("i got a request");
   console.log(req.body.message);
   const userInput = req.body.message;
