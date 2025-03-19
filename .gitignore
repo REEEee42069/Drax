@@ -93,3 +93,4 @@ Temporary Items
 
 # Local Netlify folder
 .netlify
+.vercel
